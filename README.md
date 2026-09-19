@@ -19,7 +19,7 @@ Cursor's built-in Agent `Write` and `StrReplace` tools can save files as UTF-16 
 
 ## Install in Cursor
 
-### Option 1: npm (recommended)
+### Option 1: npx from GitHub (works immediately)
 
 Add to your Cursor MCP config.
 
@@ -30,7 +30,7 @@ Add to your Cursor MCP config.
   "mcpServers": {
     "utf8-file-ops": {
       "command": "npx",
-      "args": ["-y", "utf8-file-ops-mcp"]
+      "args": ["-y", "github:Pranav-stac/utf8-file-ops-mcp"]
     }
   }
 }
@@ -43,7 +43,7 @@ Add to your Cursor MCP config.
   "mcpServers": {
     "utf8-file-ops": {
       "command": "npx",
-      "args": ["-y", "utf8-file-ops-mcp"]
+      "args": ["-y", "github:Pranav-stac/utf8-file-ops-mcp"]
     }
   }
 }
@@ -51,7 +51,20 @@ Add to your Cursor MCP config.
 
 Restart Cursor after saving.
 
-### Option 2: local clone
+### Option 2: npm (when published)
+
+```json
+{
+  "mcpServers": {
+    "utf8-file-ops": {
+      "command": "npx",
+      "args": ["-y", "utf8-file-ops-mcp"]
+    }
+  }
+}
+```
+
+### Option 3: local clone
 
 ```bash
 git clone https://github.com/Pranav-stac/utf8-file-ops-mcp.git
