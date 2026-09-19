@@ -1,6 +1,6 @@
 {
   "name": "cursor-write-edit-tool",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Cursor Write Edit Tool — MCP server for UTF-8 safe file writes and edits on Windows.",
   "type": "module",
   "bin": {

@@ -16,6 +16,15 @@ if (fs.readFileSync(filePath, "utf8") !== 'export const greeting = "world";\n') 
   throw new Error("replace verification failed");
 }
 
+const crlfPath = path.join(dir, "crlf.tsx");
+const crlfContent = "<div>\r\n  <span>OLD</span>\r\n</div>\r\n";
+fs.writeFileSync(crlfPath, crlfContent, "utf8");
+replaceInFile(crlfPath, "<div>\n  <span>OLD</span>\n</div>\n", "<div>\n  <span>NEW</span>\n</div>\n");
+const crlfResult = fs.readFileSync(crlfPath, "utf8");
+if (!crlfResult.includes("NEW") || !crlfResult.includes("\r\n")) {
+  throw new Error("CRLF multi-line replace failed");
+}
+
 const badPath = path.join(dir, "bad.ts");
 const utf16 = Buffer.from(
   "69 00 6d 00 70 00 6f 00 72 00 74 00 20 00 78 00 0a 00"

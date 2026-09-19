@@ -12,6 +12,8 @@ So I made this tool. It uses **MCP** to write and edit files directly as UTF-8. 
 
 **One drawback:** you usually **can't see the edits inline** in Cursor the same way you do with the built-in Write/StrReplace diff view. The file changes on disk, but Cursor may not show a nice side-by-side preview of what changed.
 
+**Line endings:** Windows files often use `CRLF` while the agent sends `LF`. `utf8_replace` now normalizes line endings before matching, so multi-line JSX/TSX edits should work. If a replace still fails, use `utf8_write` to rewrite the full file.
+
 ## Tools
 
 | Tool | Replaces | Description |

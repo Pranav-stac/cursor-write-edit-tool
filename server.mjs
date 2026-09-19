@@ -6,7 +6,7 @@ import { replaceInFile, verifyFile, writeFile } from "./lib/fileOps.js";
 
 const server = new McpServer({
   name: "cursor-write-edit-tool",
-  version: "1.0.1",
+  version: "1.0.2",
 });
 
 function textResult(payload) {
