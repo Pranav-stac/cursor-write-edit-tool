@@ -16,11 +16,16 @@ So I made this tool. It uses **MCP** to write and edit files directly as UTF-8. 
 
 ## Tools
 
-| Tool | Replaces | Description |
+| Tool | Use when | Description |
 |------|----------|-------------|
-| `utf8_write` | Cursor `Write` | Create or overwrite a file as UTF-8 |
-| `utf8_replace` | Cursor `StrReplace` | Search/replace in an existing file |
-| `utf8_verify` | — | Check encoding; optionally fix UTF-16 corruption |
+| `utf8_edit_lines` | Multi-line JSX/TSX | Replace lines by number (no unique `old_string` needed) |
+| `utf8_replace` | Small text swaps | EOL-aware replace; returns diff; rich errors on failure |
+| `utf8_batch` | Many edits | Several write/replace/edit ops in one call |
+| `utf8_patch` | Unified diff | Apply a single `@@` hunk |
+| `utf8_write` | New files / full rewrite | UTF-8 write; returns diff when overwriting |
+| `utf8_verify` | Encoding check | Detect/fix UTF-16 corruption |
+
+**MCP server id in Cursor:** `user-cursor-write-edit-tool`
 
 ## Requirements
 
@@ -57,9 +62,9 @@ Restart Cursor after saving.
 
 ## Agent usage
 
-Add a Cursor rule or tell your agent:
+Prefer this MCP for **source files on Windows**. If `utf8_replace` fails twice, use `utf8_edit_lines` with line numbers. Built-in Write/StrReplace are fine as a fallback.
 
-> On Windows, use the `cursor-write-edit-tool` MCP (`utf8_write`, `utf8_replace`) instead of built-in Write/StrReplace for source files.
+Tool results include a `diff` field (`removed` / `added` / `unified`) — show that to the user since inline diffs may not appear.
 
 ### Write a file
 
@@ -78,6 +83,19 @@ Add a Cursor rule or tell your agent:
   "old_string": "'ok'",
   "new_string": "'ready'",
   "replace_all": false
+}
+```
+
+On failure you get `reason`, `candidates` (line + snippet), and hints — not just `old_string not found`.
+
+### Edit by line range (best for multi-line JSX)
+
+```json
+{
+  "path": "C:\\project\\src\\page.tsx",
+  "start_line": 42,
+  "end_line": 48,
+  "new_string": "<section>\n  <h1>Title</h1>\n</section>"
 }
 ```
 
