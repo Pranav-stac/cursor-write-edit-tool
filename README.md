@@ -1,10 +1,16 @@
-# utf8-file-ops-mcp
+# Cursor Write Edit Tool
 
-MCP server that writes and edits files as **UTF-8** on Windows.
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=cursor-write-edit-tool&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImdpdGh1YjpQcmFuYXYtc3RhYy9jdXJzb3Itd3JpdGUtZWRpdC10b29sIl19)
 
-Cursor's built-in Agent `Write` and `StrReplace` tools can save files as UTF-16 LE on Windows, which breaks Node, TypeScript, C#, Dart, Java, and other toolchains. This MCP server is a drop-in replacement.
+An MCP server for **Cursor** that writes and edits files as UTF-8 on Windows.
 
-[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=utf8-file-ops&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImdpdGh1YjpQcmFuYXYtc3RhYy91dGY4LWZpbGUtb3BzLW1jcCJdfQ%3D%3D)
+## Why I built this
+
+I was hitting a frustrating issue on **Windows** with **Cursor's** built-in Agent `Write` and `StrReplace` tools — files were sometimes saved as **UTF-16** instead of UTF-8. That broke builds (`SyntaxError`, `illegal character '\0'`, etc.) and wasted time fixing corrupted source files.
+
+So I made this tool. It uses **MCP** to write and edit files directly as UTF-8. In my experience it works well and fixes the encoding problem.
+
+**One drawback:** you usually **can't see the edits inline** in Cursor the same way you do with the built-in Write/StrReplace diff view. The file changes on disk, but Cursor may not show a nice side-by-side preview of what changed.
 
 ## Tools
 
@@ -18,42 +24,28 @@ Cursor's built-in Agent `Write` and `StrReplace` tools can save files as UTF-16 
 
 - Node.js 18+
 - Cursor with MCP support
+- **Windows** (this is mainly for the Cursor UTF-16 write bug on Windows)
 
 ## Install in Cursor
 
 ### One-click install
 
-1. Click **Add to Cursor** at the top of this README
-2. Approve the install prompt in Cursor
+1. Click **Add to Cursor** above
+2. Approve the install prompt
 3. Restart Cursor if the tools do not appear immediately
 
-Uses `npx` to run from GitHub — no clone or manual `mcp.json` edit required.
+No clone or manual `mcp.json` editing required — it runs via `npx` from GitHub.
 
-### Manual install (GitHub)
+### Manual install
 
-Add to your Cursor MCP config.
-
-**Global** (`~/.cursor/mcp.json` on macOS/Linux, `%USERPROFILE%\.cursor\mcp.json` on Windows):
+Add to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` (project):
 
 ```json
 {
   "mcpServers": {
-    "utf8-file-ops": {
+    "cursor-write-edit-tool": {
       "command": "npx",
-      "args": ["-y", "github:Pranav-stac/utf8-file-ops-mcp"]
-    }
-  }
-}
-```
-
-**Project** (`.cursor/mcp.json` in your repo):
-
-```json
-{
-  "mcpServers": {
-    "utf8-file-ops": {
-      "command": "npx",
-      "args": ["-y", "github:Pranav-stac/utf8-file-ops-mcp"]
+      "args": ["-y", "github:Pranav-stac/cursor-write-edit-tool"]
     }
   }
 }
@@ -61,47 +53,13 @@ Add to your Cursor MCP config.
 
 Restart Cursor after saving.
 
-### Manual install (npm, when published)
-
-```json
-{
-  "mcpServers": {
-    "utf8-file-ops": {
-      "command": "npx",
-      "args": ["-y", "utf8-file-ops-mcp"]
-    }
-  }
-}
-```
-
-### Manual install (local clone)
-
-```bash
-git clone https://github.com/Pranav-stac/utf8-file-ops-mcp.git
-cd utf8-file-ops-mcp
-npm install
-```
-
-```json
-{
-  "mcpServers": {
-    "utf8-file-ops": {
-      "command": "node",
-      "args": ["C:\\path\\to\\utf8-file-ops-mcp\\server.mjs"]
-    }
-  }
-}
-```
-
 ## Agent usage
 
-Tell your agent (or add a Cursor rule):
+Add a Cursor rule or tell your agent:
 
-> On Windows, use the `utf8-file-ops` MCP tools (`utf8_write`, `utf8_replace`) instead of built-in Write/StrReplace for source files.
+> On Windows, use the `cursor-write-edit-tool` MCP (`utf8_write`, `utf8_replace`) instead of built-in Write/StrReplace for source files.
 
-### Examples
-
-**Write a file**
+### Write a file
 
 ```json
 {
@@ -110,7 +68,7 @@ Tell your agent (or add a Cursor rule):
 }
 ```
 
-**Replace text**
+### Replace text
 
 ```json
 {
@@ -121,7 +79,7 @@ Tell your agent (or add a Cursor rule):
 }
 ```
 
-**Verify / fix encoding**
+### Verify / fix encoding
 
 ```json
 {
@@ -130,17 +88,40 @@ Tell your agent (or add a Cursor rule):
 }
 ```
 
+## Revert limitations
+
+This tool writes files **directly to disk** through MCP. That means:
+
+| Action | Works? |
+|--------|--------|
+| Cursor Agent **Revert** button in chat | **Usually no** — MCP edits are not tracked like built-in Write/StrReplace |
+| Editor **Undo** (Ctrl+Z) | **Sometimes** — only if the file is open and you undo right away |
+| **Git** revert / restore | **Yes** — recommended |
+| Cursor **Local History** / Timeline | **Often yes** |
+
+**Use git carefully.** Commit or stash before long agent sessions. Do not rely on Cursor's revert for MCP-made changes.
+
+```bash
+git add -A && git commit -m "checkpoint before agent session"
+```
+
+If something goes wrong:
+
+```bash
+git restore .
+# or
+git checkout -- path/to/file
+```
+
 ## Development
 
 ```bash
+git clone https://github.com/Pranav-stac/cursor-write-edit-tool.git
+cd cursor-write-edit-tool
 npm install
 npm test
 npm start
 ```
-
-## Why this exists
-
-On Windows, Cursor Agent file writes sometimes land as UTF-16 LE (often without BOM). Hex looks like `69 00 6D 00 70 00` instead of `69 6D 70` for `imp`. This MCP server always writes UTF-8.
 
 ## License
 

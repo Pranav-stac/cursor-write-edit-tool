@@ -5,8 +5,8 @@ import { z } from "zod";
 import { replaceInFile, verifyFile, writeFile } from "./lib/fileOps.js";
 
 const server = new McpServer({
-  name: "utf8-file-ops",
-  version: "1.0.0",
+  name: "cursor-write-edit-tool",
+  version: "1.0.1",
 });
 
 function textResult(payload) {

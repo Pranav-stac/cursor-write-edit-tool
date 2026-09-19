@@ -1,10 +1,10 @@
 {
-  "name": "utf8-file-ops-mcp",
-  "version": "1.0.0",
-  "description": "MCP server for UTF-8 safe file writes on Windows. Drop-in replacement for Cursor Write/StrReplace.",
+  "name": "cursor-write-edit-tool",
+  "version": "1.0.1",
+  "description": "Cursor Write Edit Tool — MCP server for UTF-8 safe file writes and edits on Windows.",
   "type": "module",
   "bin": {
-    "utf8-file-ops-mcp": "./bin/cli.js"
+    "cursor-write-edit-tool": "./bin/cli.js"
   },
   "files": [
     "bin",
@@ -36,12 +36,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pranav-stac/utf8-file-ops-mcp.git"
+    "url": "git+https://github.com/Pranav-stac/cursor-write-edit-tool.git"
   },
   "bugs": {
-    "url": "https://github.com/Pranav-stac/utf8-file-ops-mcp/issues"
+    "url": "https://github.com/Pranav-stac/cursor-write-edit-tool/issues"
   },
-  "homepage": "https://github.com/Pranav-stac/utf8-file-ops-mcp#readme",
+  "homepage": "https://github.com/Pranav-stac/cursor-write-edit-tool#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "zod": "^4.6.5"
