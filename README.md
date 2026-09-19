@@ -4,6 +4,8 @@ MCP server that writes and edits files as **UTF-8** on Windows.
 
 Cursor's built-in Agent `Write` and `StrReplace` tools can save files as UTF-16 LE on Windows, which breaks Node, TypeScript, C#, Dart, Java, and other toolchains. This MCP server is a drop-in replacement.
 
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=utf8-file-ops&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImdpdGh1YjpQcmFuYXYtc3RhYy91dGY4LWZpbGUtb3BzLW1jcCJdfQ%3D%3D)
+
 ## Tools
 
 | Tool | Replaces | Description |
@@ -19,7 +21,15 @@ Cursor's built-in Agent `Write` and `StrReplace` tools can save files as UTF-16 
 
 ## Install in Cursor
 
-### Option 1: npx from GitHub (works immediately)
+### One-click install
+
+1. Click **Add to Cursor** at the top of this README
+2. Approve the install prompt in Cursor
+3. Restart Cursor if the tools do not appear immediately
+
+Uses `npx` to run from GitHub — no clone or manual `mcp.json` edit required.
+
+### Manual install (GitHub)
 
 Add to your Cursor MCP config.
 
@@ -51,7 +61,7 @@ Add to your Cursor MCP config.
 
 Restart Cursor after saving.
 
-### Option 2: npm (when published)
+### Manual install (npm, when published)
 
 ```json
 {
@@ -64,7 +74,7 @@ Restart Cursor after saving.
 }
 ```
 
-### Option 3: local clone
+### Manual install (local clone)
 
 ```bash
 git clone https://github.com/Pranav-stac/utf8-file-ops-mcp.git
