@@ -1,0 +1,48 @@
+{
+  "name": "utf8-file-ops-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for UTF-8 safe file writes on Windows. Drop-in replacement for Cursor Write/StrReplace.",
+  "type": "module",
+  "bin": {
+    "utf8-file-ops-mcp": "./server.mjs"
+  },
+  "files": [
+    "server.mjs",
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node test.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "cursor",
+    "utf-8",
+    "utf8",
+    "windows",
+    "encoding",
+    "model-context-protocol",
+    "agent",
+    "write",
+    "strreplace"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pranav-stac/utf8-file-ops-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Pranav-stac/utf8-file-ops-mcp/issues"
+  },
+  "homepage": "https://github.com/Pranav-stac/utf8-file-ops-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.6.5"
+  }
+}
