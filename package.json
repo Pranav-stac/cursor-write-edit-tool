@@ -4,9 +4,10 @@
   "description": "MCP server for UTF-8 safe file writes on Windows. Drop-in replacement for Cursor Write/StrReplace.",
   "type": "module",
   "bin": {
-    "utf8-file-ops-mcp": "./server.mjs"
+    "utf8-file-ops-mcp": "./bin/cli.js"
   },
   "files": [
+    "bin",
     "server.mjs",
     "lib",
     "README.md",
